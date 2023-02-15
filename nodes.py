@@ -1,38 +1,32 @@
+'''
+
+'''
 class Node:
     def __init__(self, x, y, cost):
-        self.position = (x, y)
+        self.position = {'x': x, 'y': y }
         self.cost = cost
-        self.children = []
+        self.parent = None
 
-"""
+'''
 
-"""
-def step(stack, grid):
-    node = stack[-1]
-    #down
-    
-    #right
-
-    #left
-
+'''
+def step(node: Node, grid: list) -> list:
+    #create a list of new nodes to add to the stack
+    newNodes = []
+    #save time by saving the current co-ords
+    x = node.position['x']
+    y = node.position['y']
     #up
-
-"""
-
-"""
-def arrayToTree(filename: str):
-    #open the file as a 2d array
-    maze = open(filename, "r").readlines()
-
-    #find the starting node in the top row
-    for n, cell in enumerate(maze[0]):
-        if cell == "-":
-            startpoint = (n, 0)
-
-    #create a stack
-    stack = [startpoint]
-    #step through each possible node
-    while stack:
-        step(stack)
-
-    print(startpoint)
+    if grid[y-1][x] == '-':
+        newNodes.append( Node(x, y-1, node.cost+1) )
+    #left
+    if grid[y][x-1] == '-':
+        newNodes.append(Node(x-1, y, node.cost+1))
+    #right
+    if grid[y][x+1] == '-':
+        newNodes.append(Node(x+1, y, node.cost+1))
+    #down
+    if grid[y+1][x] == '-':
+        newNodes.append(Node(x, y+1, node.cost+1))
+    
+    return newNodes
