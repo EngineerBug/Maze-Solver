@@ -1,5 +1,8 @@
 '''
-
+Attributes:
+    - position: the x and y co-ordanates of the node in the maze
+    - cost: the distance in nodes from the start point
+    - parent: the previous node in the tree
 '''
 class Node:
     def __init__(self, x, y, cost):
@@ -30,3 +33,18 @@ def step(node: Node, grid: list) -> list:
         newNodes.append(Node(x, y+1, node.cost+1))
     
     return newNodes
+
+'''
+Arguments:
+    - text
+'''
+def mazePrep(text: list) -> list:
+    maze = []
+    for row in text:
+        if row.split() != []:
+            maze.append(row.split())
+
+    return maze
+
+if __name__ == "__main__":
+    print(mazePrep(open('./mazes/maze-easy.txt', 'r').readlines()))

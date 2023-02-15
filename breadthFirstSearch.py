@@ -1,4 +1,4 @@
-import nodes
+from nodes import Node, step
 
 '''
 
@@ -38,7 +38,7 @@ def bfs(filename: str):
             return
 
         newNodes = step(currentNode, maze)      #find all the children of the node
-        stack.extend(newNodes)                  #add the children to the stack
+        queue.extend(newNodes)                  #add the children to the queue
         count += 1                              #increment the count
 
         #so that the path can be found, give each node the identity of its parent

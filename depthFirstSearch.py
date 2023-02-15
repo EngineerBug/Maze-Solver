@@ -1,11 +1,11 @@
-import nodes
+from nodes import Node, step, mazePrep
 
 '''
 
 '''
 def dfs(filename: str):
-    #open the file as a 2d array
-    maze = open(filename, 'r').readlines()
+    text = open(filename, 'r').readlines()      #open the file as a list of strings
+    maze = mazePrep(text)                       #turn the list into a valid 2d maze
 
     #find the starting node in the top row
     for n, cell in enumerate(maze[0]):
@@ -17,7 +17,8 @@ def dfs(filename: str):
     
     while stack:                                #step through each possible node
         currentNode = stack.pop()               #remove the top node from the stack
-        print( 'x ' + str(currentNode.position['x']) + ', y ' + str(currentNode.position['y']))
+        maze[currentNode.position['y']][currentNode.position['x']] = 'x'
+        #print( 'x ' + str(currentNode.position['x']) + ', y ' + str(currentNode.position['y']))
 
         #since the only '-' character on the bottom line is stated to be the exit, the check is quite simple
         if currentNode.position['y'] == len(maze)-1:
@@ -32,7 +33,7 @@ def dfs(filename: str):
             while pathNode.cost != 1:
                 path.append('(' + str(pathNode.position['x']) + ',' + str(pathNode.position['y']) + ')')
                 pathNode = pathNode.parent      #point to the previous node
-
+            path.reverse()
             print('The path to the goal:' + str(path))
 
             return
@@ -50,4 +51,6 @@ def dfs(filename: str):
 
 
 if __name__ == '__main__':
-    dfs('./mazes/maze-test.txt')
+    dfs('./mazes/tests/default.txt')
+    #dfs('mazes/tests/change-direction.txt')
+    #dfs('./mazes/tests/dead-ends.txt')
