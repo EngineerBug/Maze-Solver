@@ -16,30 +16,15 @@ class Node:
         print(self.value)
         print("Children" + self.children)
 
-"""
-Arguments: the name of a text file containing a maze.
-
-Output: a tree with 
-"""
-def createTree(filename: str) -> Node:
+def arrayToTree(filename: str):
+    #open the file as a 2d array
     maze = open(filename, "r").readlines()
-    
-    
-"""
 
-"""
-def dfs(start: int, end: int, node: Node) -> list:
-    pass
-
-"""
-
-"""
-def mazeSolver(filename: str) -> list:
-    pass
-    #create the 2d array of the maze
-    #find the starting node
-    #find the end node
+    #find the starting node in the 
+    for n, cell in enumerate(maze[0]):
+        if cell == "-":
+            startpoint = (n, 0)
+    print(startpoint)
 
 if __name__ == "__main__":
-    print("Hi")
-    
+    arrayToTree("./mazes/maze-test.txt")
