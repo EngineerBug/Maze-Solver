@@ -24,7 +24,7 @@ def dfs(filename: str):
         if currentNode.position['y'] == len(maze)-1:
             print('Exit found!')
             print('Time: [pending]')
-            print('Nodes visited: ' + str(count))
+            print('Total Nodes visited: ' + str(count))
             print('Solution Length: ' + str(currentNode.cost))
             
             pathNode = currentNode
@@ -33,6 +33,8 @@ def dfs(filename: str):
             while pathNode.cost != 1:
                 path.append('(' + str(pathNode.position['x']) + ',' + str(pathNode.position['y']) + ')')
                 pathNode = pathNode.parent      #point to the previous node
+    
+            path.append('(' + str(startpoint.position['x']) + ',' + str(startpoint.position['y']) + ')')
             path.reverse()
             print('The path to the goal:' + str(path))
 
@@ -51,6 +53,7 @@ def dfs(filename: str):
 
 
 if __name__ == '__main__':
-    dfs('./mazes/tests/default.txt')
+    #dfs('./mazes/tests/default.txt')
     #dfs('mazes/tests/change-direction.txt')
     #dfs('./mazes/tests/dead-ends.txt')
+    dfs('./mazes/maze-Easy.txt')
