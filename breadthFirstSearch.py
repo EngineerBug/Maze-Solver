@@ -1,11 +1,34 @@
-from nodes import Node, step
+from time import perf_counter
+from nodes import Node, step, mazePrep
 
 '''
+Arguments:
+    - filename: a string pointing to a '.txt' file containing a maze layout
 
+Read in a text file and turn it into a 2d array (with nodes.mazePrep())
+Find the starting node which we know is in the top row.
+Create a queue to store nodes and a node counter.
+While the queue is not empty:
+    Remove the top node from the queue and mark it as visited
+    If the node is the goal node (indicated by it's self.position['y'] value)
+        Print metrics about the performance
+        Print the path.
+        Return
+    Else
+        Find all the children of the current node and add them to the queue
+        Assign the children their parent.
+    If the queue is empty and the goal has not been found, tell the user.
+    Return
+
+Output: 
+    - The total number of nodes visited
+    - the number of nodes in the solution
+    - the ordered list of nodes leading from the start ot the goal
 '''
-def bfs(filename: str):
-    #open the file as a 2d array
-    maze = open(filename, 'r').readlines()
+def bfs(filename: str) -> tuple:
+    timestart = perf_counter()                  #begin the stopwatch for the program
+    text = open(filename, 'r').readlines()      #open the file as a list of strings
+    maze = mazePrep(text)                       #turn the list into a valid 2d maze
 
     #find the starting node in the top row
     for n, cell in enumerate(maze[0]):
@@ -17,14 +40,17 @@ def bfs(filename: str):
     
     while queue:                                #step through each possible node
         currentNode = queue.pop(0)              #remove the front node from the queue
-        print( 'x ' + str(currentNode.position['x']) + ', y ' + str(currentNode.position['y']))
+        maze[currentNode.position['y']][currentNode.position['x']] = 'x' #mark currentNode as visited
+        #print( 'x ' + str(currentNode.position['x']) + ', y ' + str(currentNode.position['y']))
 
         #since the only '-' character on the bottom line is stated to be the exit, the check is quite simple
         if currentNode.position['y'] == len(maze)-1:
-            print('Exit found!')
-            print('Time: [pending]')
-            print('Nodes visited: ' + str(count))
-            print('Solution Length: ' + str(currentNode.cost))
+            timestop = perf_counter()            #stop the stopwatch for the program
+            solutionLength = currentNode.cost
+            print('Exit found for ' + filename)
+            print('Time: ' + str( round((timestop-timestart), 5)) + 'secs')
+            print('Total Nodes visited: ' + str(count))
+            print('Solution Length: ' + str(solutionLength))
             
             pathNode = currentNode
             path = []
@@ -32,10 +58,12 @@ def bfs(filename: str):
             while pathNode.cost != 1:
                 path.append('(' + str(pathNode.position['x']) + ',' + str(pathNode.position['y']) + ')')
                 pathNode = pathNode.parent      #point to the previous node
-
+    
+            path.append('(' + str(startpoint.position['x']) + ',' + str(startpoint.position['y']) + ')')
+            path.reverse()
             print('The path to the goal:' + str(path))
 
-            return
+            return (count, solutionLength, path)
 
         newNodes = step(currentNode, maze)      #find all the children of the node
         queue.extend(newNodes)                  #add the children to the queue
@@ -46,8 +74,29 @@ def bfs(filename: str):
             node.parent = currentNode
 
     print('No solution was found.')
-    return
+    return (0, 0, [])
 
 
 if __name__ == '__main__':
-    bfs('./mazes/maze-test.txt')
+    '''
+    default = bfs('./mazes/tests/default.txt')
+    assert default[0] == 10
+    assert default[1] == 10
+    assert len(default[2]) == default[1]
+    direction = bfs('./mazes/tests/change-direction.txt')
+    assert direction[0] == 15
+    assert direction[1] == 15
+    assert len(direction[2]) == direction[1]
+    deadend = bfs('./mazes/tests/dead-ends.txt')
+    assert deadend[0] == 10
+    assert deadend[1] == 9
+    assert len(deadend[2]) == deadend[1]
+    '''
+    #easy = bfs('./mazes/maze-Easy.txt')
+    #assert easy[0] == 86
+    #assert easy[1] == 27
+    #assert len(easy[2]) == easy[1]
+
+    #bfs('./mazes/maze-Medium.txt')
+    #bfs('./mazes/maze-Large.txt')
+    bfs('./mazes/maze-VLarge.txt')
