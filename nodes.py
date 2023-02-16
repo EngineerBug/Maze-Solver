@@ -11,7 +11,14 @@ class Node:
         self.parent = None
 
 '''
+Arguments:
+    - node: a node in the tree 
+    - grid: the 2d maze
 
+Check the four positions adjacent to the argument node.
+If they are marked as a path ('-'), add them to the tree.
+
+Output: a list of neighbouring nodes to the input node
 '''
 def step(node: Node, grid: list) -> list:
     #create a list of new nodes to add to the stack
@@ -36,7 +43,10 @@ def step(node: Node, grid: list) -> list:
 
 '''
 Arguments:
-    - text
+    - text: a text file which needs to be turned into a 2d array
+
+Output:
+    - a 2d array containing only '-' and '#'
 '''
 def mazePrep(text: list) -> list:
     maze = []

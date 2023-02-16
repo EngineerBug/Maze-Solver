@@ -1,9 +1,29 @@
 from nodes import Node, step, mazePrep
 
 '''
+Arguments:
+    - filename: a string pointing to a '.txt' file containing a maze layout
 
+Read in a text file and turn it into a 2d array (with nodes.mazePrep())
+Find the starting node which we know is in the top row.
+Create a stack to store nodes and a node counter.
+While the stack is not empty:
+    Remove the top node from the stack and mark it as visited
+    If the node is the goal node (indicated by it's self.position['y'] value)
+        Print metrics about the performance
+        Print the path.
+        Return
+    Else
+        Find all the children of the current node and add them to the stack
+        Assign the children their parent.
+    If the stack is empty and the goal has not been found, tell the user.
+    Return
+
+Output: 
+    - The total number of nodes visited
+    - the number of nodes in the solution
 '''
-def dfs(filename: str):
+def dfs(filename: str) -> tuple:
     text = open(filename, 'r').readlines()      #open the file as a list of strings
     maze = mazePrep(text)                       #turn the list into a valid 2d maze
 
@@ -17,15 +37,16 @@ def dfs(filename: str):
     
     while stack:                                #step through each possible node
         currentNode = stack.pop()               #remove the top node from the stack
-        maze[currentNode.position['y']][currentNode.position['x']] = 'x'
+        maze[currentNode.position['y']][currentNode.position['x']] = 'x' #mark currentNode as visited
         #print( 'x ' + str(currentNode.position['x']) + ', y ' + str(currentNode.position['y']))
 
         #since the only '-' character on the bottom line is stated to be the exit, the check is quite simple
         if currentNode.position['y'] == len(maze)-1:
+            solutionLength = currentNode.cost
             print('Exit found!')
             print('Time: [pending]')
             print('Total Nodes visited: ' + str(count))
-            print('Solution Length: ' + str(currentNode.cost))
+            print('Solution Length: ' + str(solutionLength))
             
             pathNode = currentNode
             path = []
@@ -38,7 +59,7 @@ def dfs(filename: str):
             path.reverse()
             print('The path to the goal:' + str(path))
 
-            return
+            return (count, solutionLength)
 
         newNodes = step(currentNode, maze)      #find all the children of the node
         stack.extend(newNodes)                  #add the children to the stack
@@ -49,7 +70,7 @@ def dfs(filename: str):
             node.parent = currentNode
 
     print('No solution was found.')
-    return
+    return (0, 0)
 
 
 if __name__ == '__main__':
