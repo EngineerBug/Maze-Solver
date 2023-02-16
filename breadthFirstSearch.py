@@ -9,7 +9,7 @@ Read in a text file and turn it into a 2d array (with nodes.mazePrep())
 Find the starting node which we know is in the top row.
 Create a queue to store nodes and a node counter.
 While the queue is not empty:
-    Remove the top node from the queue and mark it as visited
+    Remove the front node from the queue and mark it as visited
     If the node is the goal node (indicated by it's self.position['y'] value)
         Print metrics about the performance
         Print the path.
@@ -41,7 +41,6 @@ def bfs(filename: str) -> tuple:
     while queue:                                #step through each possible node
         currentNode = queue.pop(0)              #remove the front node from the queue
         maze[currentNode.position['y']][currentNode.position['x']] = 'x' #mark currentNode as visited
-        #print( 'x ' + str(currentNode.position['x']) + ', y ' + str(currentNode.position['y']))
 
         #since the only '-' character on the bottom line is stated to be the exit, the check is quite simple
         if currentNode.position['y'] == len(maze)-1:
@@ -61,7 +60,7 @@ def bfs(filename: str) -> tuple:
     
             path.append('(' + str(startpoint.position['x']) + ',' + str(startpoint.position['y']) + ')')
             path.reverse()
-            print('The path to the goal:' + str(path))
+            #print('The path to the goal:' + str(path)) #***in order to stop the path being printed, comment this line
 
             return (count, solutionLength, path)
 

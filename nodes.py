@@ -41,6 +41,7 @@ def step(node: Node, grid: list) -> list:
     
     return newNodes
 
+
 '''
 Arguments:
     - text: a text file which needs to be turned into a 2d array
