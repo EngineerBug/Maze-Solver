@@ -1,3 +1,4 @@
+from time import perf_counter
 from nodes import Node, step, mazePrep
 
 '''
@@ -24,6 +25,7 @@ Output:
     - the number of nodes in the solution
 '''
 def dfs(filename: str) -> tuple:
+    timestart = perf_counter()                  #begin the stopwatch for the program
     text = open(filename, 'r').readlines()      #open the file as a list of strings
     maze = mazePrep(text)                       #turn the list into a valid 2d maze
 
@@ -42,9 +44,10 @@ def dfs(filename: str) -> tuple:
 
         #since the only '-' character on the bottom line is stated to be the exit, the check is quite simple
         if currentNode.position['y'] == len(maze)-1:
+            timestop = perf_counter()            #stop the stopwatch for the program
             solutionLength = currentNode.cost
-            print('Exit found!')
-            print('Time: [pending]')
+            print('Exit found for ' + filename)
+            print('Time: ' + str( round((timestop-timestart), 5)) + 'secs')
             print('Total Nodes visited: ' + str(count))
             print('Solution Length: ' + str(solutionLength))
             
@@ -59,7 +62,7 @@ def dfs(filename: str) -> tuple:
             path.reverse()
             print('The path to the goal:' + str(path))
 
-            return (count, solutionLength)
+            return (count, solutionLength, path)
 
         newNodes = step(currentNode, maze)      #find all the children of the node
         stack.extend(newNodes)                  #add the children to the stack
@@ -70,11 +73,25 @@ def dfs(filename: str) -> tuple:
             node.parent = currentNode
 
     print('No solution was found.')
-    return (0, 0)
+    return (0, 0, [])
 
 
 if __name__ == '__main__':
-    #dfs('./mazes/tests/default.txt')
-    #dfs('mazes/tests/change-direction.txt')
-    #dfs('./mazes/tests/dead-ends.txt')
-    dfs('./mazes/maze-Easy.txt')
+    '''
+    default = dfs('./mazes/tests/default.txt')
+    assert default[0] == 10
+    assert default[1] == 10
+    assert len(default[2]) == default[1]
+    direction = dfs('./mazes/tests/change-direction.txt')
+    assert direction[0] == 15
+    assert direction[1] == 15
+    assert len(direction[2]) == direction[1]
+    deadend = dfs('./mazes/tests/dead-ends.txt')
+    assert deadend[0] == 10
+    assert deadend[1] == 9
+    assert len(deadend[2]) == deadend[1]
+    '''
+    easy = dfs('./mazes/maze-Easy.txt')
+    assert easy[0] == 46
+    assert easy[1] == 27
+    assert len(easy[2]) == easy[1]
