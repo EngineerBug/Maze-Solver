@@ -23,6 +23,7 @@ While the stack is not empty:
 Output: 
     - The total number of nodes visited
     - the number of nodes in the solution
+    - the ordered list of nodes leading from the start ot the goal
 '''
 def dfs(filename: str) -> tuple:
     timestart = perf_counter()                  #begin the stopwatch for the program
@@ -95,3 +96,7 @@ if __name__ == '__main__':
     assert easy[0] == 46
     assert easy[1] == 27
     assert len(easy[2]) == easy[1]
+    
+    #dfs('./mazes/maze-Medium.txt')
+    #dfs('./mazes/maze-Large.txt')
+    #dfs('./mazes/maze-VLarge.txt')
