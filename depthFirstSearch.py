@@ -41,7 +41,6 @@ def dfs(filename: str) -> tuple:
     while stack:                                #step through each possible node
         currentNode = stack.pop()               #remove the top node from the stack
         maze[currentNode.position['y']][currentNode.position['x']] = 'x' #mark currentNode as visited
-        #print( 'x ' + str(currentNode.position['x']) + ', y ' + str(currentNode.position['y']))
 
         #since the only '-' character on the bottom line is stated to be the exit, the check is quite simple
         if currentNode.position['y'] == len(maze)-1:
@@ -61,7 +60,7 @@ def dfs(filename: str) -> tuple:
     
             path.append('(' + str(startpoint.position['x']) + ',' + str(startpoint.position['y']) + ')')
             path.reverse()
-            print('The path to the goal:' + str(path))
+            print('The path to the goal:' + str(path)) #In order to stop the path being printed, comment this line
 
             return (count, solutionLength, path)
 

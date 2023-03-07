@@ -1,4 +1,3 @@
-
 ## Python Maze Solver
 
 This is a maze solver using depth first and breadth first searches to solve a
@@ -6,14 +5,15 @@ maze imported from a text file.
 
 #### Notes for use:
 
-- nodes.py is designed to contain all code common to other files in the project.
-- functions and classes from nodes.py is imported into depthFirstSearch.py and 
-breadthFirstSearch.py
-    - therefore, do not run either without nodes.py in the same directories
+- nodes.py contains code vital to run other python scripts in this project.
 - Line 63 in breadthFirstSearch.py and depthFirstSearch.py can be 
 commented/uncommented to diable/enable the whole path being printed
+- At the bottom of each file there is a selection of commented lines to run different mazes.
+- Running the project: 
+    - Run in terminal: python3 \[filename\].py
+    - Run in IDLE: Press F5
 
-Questions:
+### Questions:
 
 #### 1.1: Maze Solver as a Search Problem
 
@@ -269,16 +269,19 @@ The path to the goal:
 #### 1.3.1: Alterative Algorithm
 
 An alternative algorithm to solve the maze would be breadth-first-search, a
-uniform method of searching a tree where instead of choosing the next node
-based on a stack, BFS chooses based on a queue. I.e. it searches by tree
+uninformed method of searching a tree where instead of choosing the next node
+based on a stack, BFS chooses based on a queue. I.e. it searches the tree by
 layer instead of by branch.
 
-BFS could improve performance because more paths (but fewer dead ends) would be searched.
+Both BFS and DDFS have high time comlexity and BFS has high space complexity, 
+however BFS is complete and is gurenteed to return the optimal solution.
+Therefore, I expect that BFS will return a shorter path than DFS.
 
 #### 1.3.2: Implement Alternative Algorithm (Refer to breadthFirstSearch.py)
 
 Implementing BFS is rather simple after DFS is already being used. I simply
-replaced the stack used by DFS with a queue.
+replaced the stack used by DFS with a queue. I did this by changing the 
+algorithm to take the first element of a list instead of the last.
 
 #### 1.3.3: Analyse Alternative Algorithm (Refer to breadthFirstSearch.py)
 
@@ -405,7 +408,9 @@ Total Nodes visited: 1603843
 
 Solution Length: 3691
 
-The path to the goal:[(1,0), (1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (2,7), (2,8), (2,9), (2,10), (2,11), (2,12), (3,12), (4,12), (5,12), (6,12), (6,13), (6,14), 
+The path to the goal:
+
+(1,0), (1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (2,7), (2,8), (2,9), (2,10), (2,11), (2,12), (3,12), (4,12), (5,12), (6,12), (6,13), (6,14), 
 (6,15), (6,16), (5,16), (5,17), (4,17), (4,18), (4,19), (5,19), (5,20), (5,21), (4,21), (4,22), (4,23), (4,24), (3,24), (3,25), (3,26), (2,26), (1,26), (1,27), (1,28), (2,28), (2,29), (3,29), (3,30), (3,31), (3,32), (3,33), (3,34), (3,35), (3,36), (3,37), (3,38), (2,38), (2,39), (2,40), (2,41), (2,42), (2,43), (2,44), (2,45), (1,45), (1,46), (1,47), (2,47), (2,48), (2,49), (2,50), (2,51), (3,51), (4,51), (4,52), (4,53), (3,53), (3,54), (3,55), (3,56), (3,57), (3,58), (4,58), (5,58), (6,58), (7,58), (7,59), (7,60), (6,60), (6,61), (6,62), (7,62), (7,63), (7,64), (7,65), (7,66), (7,67), (7,68), (7,69), (7,70), (7,71), (7,72), (7,73), (7,74), (7,75), (6,75), (6,76), (6,77), (6,78), (6,79), (5,79), (5,80), (4,80), (3,80), (2,80), (2,81), (2,82), (2,83), (2,84), (3,84), (3,85), (3,86), (3,87), (3,88), (3,89), (4,89), (4,90), (4,91), (5,91), (5,92), (5,93), (6,93), (7,93), (8,93), (9,93), (10,93), (10,94), (10,95), (11,95), (12,95), (12,96), (12,97), (13,97), (14,97), (14,98), (14,99), (14,100), (14,101), (14,102), (15,102), (15,103), (15,104), (16,104), (16,105), (17,105), (17,106), (17,107), (17,108), (17,109), (17,110), (17,111), (18,111), (18,112), (18,113), (18,114), (19,114), (19,115), (20,115), (21,115), 
 (22,115), (23,115), (23,116), (23,117), (24,117), (25,117), (25,118), (25,119), (25,120), (25,121), (26,121), (26,122), (26,123), (27,123), (27,124), (27,125), (28,125), 
 (28,126), (28,127), (28,128), (28,129), (28,130), (28,131), (28,132), (28,133), (27,133), (26,133), (26,134), (25,134), (25,135), (25,136), (25,137), (25,138), (25,139), 
@@ -560,11 +565,12 @@ However, BFS consistently returned a shorter path to the goal node than DFS.
 Therefore, it is arguable that if the maze were real, the time waisted by 
 using BFS could be saved by the reduced time traversing the maze. 
 
-#### Further Experimentation, Depth of Analysis or Discussion
+#### Further Experimentation, Depth of Analysis and Discussion
 
-I tested changing the order I added new nodes to the data-structure, 
-for BFS this did not greatly affect the performance, likely because 
-BFS will check all neighbours of a node sooner than DFS. 
+I tested changing the order I added new nodes to the data-structure 
+in each search algorithm, for BFS this did not greatly affect the performance, 
+likely because BFS is almost gurenteed to check all of a nodes neighbours 
+so the order is irrelevant.
 
 The time complexity of DFS was greatly improved by prioritising neighbours, 
 this is likely because it led to branches pointing toward where the exit 
@@ -579,4 +585,4 @@ I also tried to implement a heuristic search which would take the co-ordinates
 of the entrance and exit and calculate the direct distance between them. It 
 would then treat that value as an absolute minimum and eliminate all shorter 
 branches. However, the algorithm to implement this was itself more time-complex 
-than the time it saved.
+than the time it saved, so I did not use it in the final project.

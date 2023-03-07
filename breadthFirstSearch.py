@@ -60,7 +60,7 @@ def bfs(filename: str) -> tuple:
     
             path.append('(' + str(startpoint.position['x']) + ',' + str(startpoint.position['y']) + ')')
             path.reverse()
-            #print('The path to the goal:' + str(path)) #***in order to stop the path being printed, comment this line
+            print('The path to the goal:' + str(path)) #In order to stop the path being printed, comment this line
 
             return (count, solutionLength, path)
 
