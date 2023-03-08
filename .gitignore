@@ -2,3 +2,4 @@ bfs_and_dfs.py
 maze-solver.py
 
 __pycache__
+*-output.txt

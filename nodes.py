@@ -3,12 +3,14 @@ Attributes:
     - position: the x and y co-ordanates of the node in the maze
     - cost: the distance in nodes from the start point
     - parent: the previous node in the tree
+    - children: a list of nodes which are adjacent to the current node
 '''
 class Node:
     def __init__(self, x, y, cost):
         self.position = {'x': x, 'y': y }
         self.cost = cost
         self.parent = None
+        self.children = []
 
 '''
 Arguments:

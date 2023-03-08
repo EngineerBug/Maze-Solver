@@ -60,7 +60,13 @@ def bfs(filename: str) -> tuple:
     
             path.append('(' + str(startpoint.position['x']) + ',' + str(startpoint.position['y']) + ')')
             path.reverse()
-            print('The path to the goal:' + str(path)) #In order to stop the path being printed, comment this line
+                        #write the solution path to a file in lines of 20 coordinates
+            with open(filename+'-output.txt', 'w') as f:
+                for n, point in enumerate(path):
+                    if(n % 20 == 0):
+                        f.write(point + '\n')
+                    else:
+                        f.write(point + ' ')
 
             return (count, solutionLength, path)
 
@@ -77,7 +83,7 @@ def bfs(filename: str) -> tuple:
 
 
 if __name__ == '__main__':
-    '''
+
     default = bfs('./mazes/tests/default.txt')
     assert default[0] == 10
     assert default[1] == 10
@@ -90,12 +96,8 @@ if __name__ == '__main__':
     assert deadend[0] == 10
     assert deadend[1] == 9
     assert len(deadend[2]) == deadend[1]
-    '''
-    #easy = bfs('./mazes/maze-Easy.txt')
-    #assert easy[0] == 86
-    #assert easy[1] == 27
-    #assert len(easy[2]) == easy[1]
 
-    #bfs('./mazes/maze-Medium.txt')
-    #bfs('./mazes/maze-Large.txt')
+    bfs('./mazes/maze-Easy.txt')
+    bfs('./mazes/maze-Medium.txt')
+    bfs('./mazes/maze-Large.txt')
     bfs('./mazes/maze-VLarge.txt')
