@@ -7,11 +7,12 @@ maze imported from a text file.
 
 - nodes.py contains code vital to run other python scripts in this project.
 - The full path will be output in the same folder as the input file, with the
-  same name as the input file, but with the extension "-output.txt".
+  same name as the input file, but with the addition "-output.txt".
 - At the bottom of each file there is a selection of commented lines to run different mazes.
 - Running the project: 
     - Run in terminal: python3 \[filename\].py
     - Run in IDLE: Press F5
+- All results can be viewed in the "results.png" or "results.xlsx" files.
 
 ### Questions:
 
@@ -36,13 +37,9 @@ another path.
 Path:
 
 (1,0), (1,1), (2,1), (3,1), (4,1), (5,1), 
-
 (5,2), (5,3), (5,4), (5,5), (6,5), (7,5), 
-
 (8,5), (8,6), (9,6), (10,6), (11,6), (12,6), 
-
 (13,6), (14,6), (15,6), (16,6), (17,6), (17,7), 
-
 (17,8), (18,8), (18,9)
 
 #### 1.2.3: DFS Analysis (Refer to depthFirstSearch.py)
@@ -109,13 +106,9 @@ Solution Length: 27
 The path to the goal:
 
 (1,0), (1,1), (2,1), (3,1), (4,1), (5,1), 
-
 (5,2), (5,3), (5,4), (5,5), (6,5), (7,5), 
-
 (8,5), (8,6), (9,6), (10,6), (11,6), (12,6), 
-
 (13,6), (14,6), (15,6), (16,6), (17,6), (17,7), 
-
 (17,8), (18,8), (18,9)
 
 **maze-Medium**
@@ -163,6 +156,8 @@ using BFS could be saved by the reduced time traversing the maze.
 
 #### Further Experimentation, Depth of Analysis and Discussion (Refer to nodes.py and heuristicSearch.py)
 
+##### Messing With Previous Algorithms
+
 I tested changing the order I added new nodes to the data-structure 
 in each search algorithm, for BFS this did not greatly affect the performance, 
 likely because BFS is almost gurenteed to check all of a nodes neighbours 
@@ -177,17 +172,27 @@ away from the goal. This was the best order I found:
 3. Left
 4. Up
 
-I also implemented a heuristic search (similar to A*) which would take the co-ordinates 
+##### Heuristic Search V1 (Refer to heuristicSearch.py)
+
+I also implemented a heuristic search (greedy) which would take the co-ordinates 
 of the each node calculate the direct distance to the goal node. Then, instead of a queue or stack,
 I used a priority queue which would always put the node with the shortest heuristic at the front.
 
 The first thing I noticed was that the algorithm visited the fewest nodes in maze-Easy.txt, 
-which was a promising start. This trend continued, with A* only searching 40% of the nodes DFS 
+which was a promising start. This trend continued, with the greedy search only searching 40% of the nodes DFS 
 did and only 3% the nodes of BFS (for the VLarge maze).
 
-However, the algorithm found a slightly longer path than BFS and was slightly slower than DFS. 
+However, the algorithm found a path of the same length as DFS but was slightly slower than DFS. 
 This is likely because python's priority queue is not blazingly fast, so if I were able to 
-implement a more efficient method of choosing a next node, I could possibly make this algorithm 
-faster than DFS.
+implement a more efficient method of choosing the node with the lowest heuristic, I could 
+possibly make this algorithm faster than DFS.
 
-This can all be viewed in the "results.png" or "results.xlsx" files.
+##### Heuristic Search V2 (Refer to heuristicSearchV2.py)
+
+I then made a slight change to the algorithm (refer to heuristicSearchV2.py) where instead of 
+using python's priority queue, I used a list and searched it for the node with the lowest heuristic.
+
+This was quite the enigma. I think that it has a O(k^n) because it was ok for the smaller mazes, 
+but suddenly shot up for Large.txt and VLarge.txt. As for the other metrics, it was completely unpredictable.
+Sometimes it would return the DFS solution, other times it would find the BFS solution. Therefore, I would say that
+this algorithm is not very reliable and version one is superior.
