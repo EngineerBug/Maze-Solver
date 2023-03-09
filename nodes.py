@@ -10,7 +10,20 @@ class Node:
         self.position = {'x': x, 'y': y }
         self.cost = cost
         self.parent = None
-        self.children = []
+        self.heuristic = 0
+
+    #these methods are for use in the heuristicSearch.py algorithm
+    def calcHeuristic(self, goal):
+        self.heuristic = ((self.position['x'] - goal.position['x'])**2 + (self.position['y'] - goal.position['y'])**2)**0.5
+    
+    def __lt__(self, other):
+        return self.heuristic < other.heuristic
+    
+    def __eq__(self, other):
+        return self.position == other.position
+    
+    def __gt__(self, other):
+        return self.heuristic > other.heuristic
 
 '''
 Arguments:

@@ -161,7 +161,7 @@ However, BFS consistently returned a shorter path to the goal node than DFS.
 Therefore, it is arguable that if the maze were real, the time waisted by 
 using BFS could be saved by the reduced time traversing the maze. 
 
-#### Further Experimentation, Depth of Analysis and Discussion
+#### Further Experimentation, Depth of Analysis and Discussion (Refer to nodes.py and heuristicSearch.py)
 
 I tested changing the order I added new nodes to the data-structure 
 in each search algorithm, for BFS this did not greatly affect the performance, 
@@ -169,7 +169,7 @@ likely because BFS is almost gurenteed to check all of a nodes neighbours
 so the order is irrelevant.
 
 The time complexity of DFS was greatly improved by prioritising neighbours, 
-this is likely because it led to branches pointing toward where the exit 
+this is likely because it led the process to branches pointing toward where the exit 
 was known to be (bottom right corner) and eliminated dead branches pointing 
 away from the goal. This was the best order I found:
 1. Down
@@ -177,8 +177,17 @@ away from the goal. This was the best order I found:
 3. Left
 4. Up
 
-I also tried to implement a heuristic search which would take the co-ordinates 
-of the entrance and exit and calculate the direct distance between them. It 
-would then treat that value as an absolute minimum and eliminate all shorter 
-branches. However, the algorithm to implement this was itself more time-complex 
-than the time it saved, so I did not use it in the final project.
+I also implemented a heuristic search (similar to A*) which would take the co-ordinates 
+of the each node calculate the direct distance to the goal node. Then, instead of a queue or stack,
+I used a priority queue which would always put the node with the shortest heuristic at the front.
+
+The first thing I noticed was that the algorithm visited the fewest nodes in maze-Easy.txt, 
+which was a promising start. This trend continued, with A* only searching 40% of the nodes DFS 
+did and only 3% the nodes of BFS (for the VLarge maze).
+
+However, the algorithm found a slightly longer path than BFS and was slightly slower than DFS. 
+This is likely because python's priority queue is not blazingly fast, so if I were able to 
+implement a more efficient method of choosing a next node, I could possibly make this algorithm 
+faster than DFS.
+
+This can all be viewed in the "results.png" or "results.xlsx" files.

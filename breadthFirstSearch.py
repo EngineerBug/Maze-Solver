@@ -58,9 +58,9 @@ def bfs(filename: str) -> tuple:
                 path.append('(' + str(pathNode.position['x']) + ',' + str(pathNode.position['y']) + ')')
                 pathNode = pathNode.parent      #point to the previous node
     
+            #write the solution path to a file in lines of 20 coordinates
             path.append('(' + str(startpoint.position['x']) + ',' + str(startpoint.position['y']) + ')')
             path.reverse()
-                        #write the solution path to a file in lines of 20 coordinates
             with open(filename+'-output.txt', 'w') as f:
                 for n, point in enumerate(path):
                     if(n % 20 == 0):
